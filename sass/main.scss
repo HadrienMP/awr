@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap');
+@import "reset";
+@import "theme";
+@import "galerie";
+@import "simulation";
+
+html {
+  background: $light-color;
+}
+
+body {
+  font-family: Raleway, sans-serif;
+}
+
+
+a {
+  color: black;
+  text-decoration: none;
+
+  &:visited {
+    color: black;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#container {
+  position: absolute;
+  top: 50px;
+  bottom: 50px;
+  background: white;
+  overflow: auto;
+  width: 100%;
+
+  @media (max-width: $max-container-width) {
+    padding: 0 2vh;
+  }
+}
+
+.centering-div {
+  margin: auto;
+  max-width: 800px;
+}
+
+header {
+  margin: 7vh auto;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+
+  @media (max-width: 500px) {
+    margin: 5vh auto;
+    flex-direction: column;
+
+    img {
+      width: 150px;
+      border-radius: 50%;
+      margin: 0 0 5vh;
+    }
+    h1 {
+      margin-bottom: 5vh;
+    }
+  }
+  @media (min-width: 500px) {
+    img {
+      width: 200px;
+      border-radius: 50%;
+      margin-right: 40px;
+    }
+    h1 {
+      margin-bottom: 6px;
+    }
+  }
+
+  img {
+    border-radius: 50%;
+    box-shadow: 4px 4px 10px $light-color;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    margin: 10px 0 0;
+  }
+
+  .social {
+    justify-content: center;
+    margin-top: 26px;
+    a {
+      font-size: 1.2em;
+      height: 40px;
+      width: 40px;
+      padding-top: 10px;
+      margin: 0 10px;
+    }
+  }
+
+  p {
+    letter-spacing: 1.7px;
+    margin-top: 10px;
+  }
+}
+.social {
+  display: flex;
+  a {
+    background: $intense-color;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+  }
+}
+
+@import "nav";
+
+h2 {
+  font-size: 1.42em;
+}
+
+#apropos {
+  text-align: justify;
+  padding: 5vh 20px;
+  border-top: 2px solid $light-color;
+  border-bottom: 2px solid $light-color;
+}
+
+#gallery {
+  margin: 7vh auto;
+  display: flex;
+  flex-wrap: wrap;
+  img {
+    flex: 1 1;
+    border-radius: 10px;
+    min-width: 229px;
+    padding: 4px;
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: right;
+  padding: 10px;
+  background: $light-color;
+
+  .social {
+    justify-content: right;
+
+    a {
+      width: 30px;
+      height: 30px;
+      padding-top: 6px;
+      margin: 0 4px;
+    }
+  }
+}

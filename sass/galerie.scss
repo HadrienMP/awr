@@ -1,0 +1,13 @@
+$space: 4px;
+#mosaic {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $space;
+  justify-content: center;
+  img {
+    border-radius: 10px;
+    width: 400px;
+    max-width: 33%;
+    padding: $space;
+  }
+}

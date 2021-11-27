@@ -1,0 +1,7 @@
+dist
+node_modules
+package-lock.json
+.idea
+dist.zip
+elm-stuff
+.DS_Store

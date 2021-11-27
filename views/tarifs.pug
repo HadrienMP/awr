@@ -1,0 +1,8 @@
+extends template
+block content
+    #container
+        #simulation
+block append scripts
+    script(src="/js/simulation.js")
+    script.
+        Elm.Main.init({node: document.getElementById("simulation")});

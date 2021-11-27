@@ -1,0 +1,155 @@
+@import "./theme";
+
+$price-col-width: 33%;
+$top-distance: 5vh;
+$style-change-width: 600px;
+
+
+#simulation-columns {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 961px;
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  & > * {
+    padding: 5vh 2vh;
+  }
+
+  h2 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid wheat;
+    margin: 40px 0 20px;
+    font-size: 1.4em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  #fields {
+    @media (max-width: $style-change-width) {
+      position: absolute;
+      top: 0;
+      bottom: 200px;
+      overflow: auto;
+      width: 100%;
+      padding-top: 3vh;
+    }
+    @media (min-width: $style-change-width) {
+      position: absolute;
+      top: 5vh;
+      bottom: 0;
+      left: $price-col-width;
+      overflow: auto;
+      padding: 0 2px;
+    }
+
+    .radio-field {
+      display: flex;
+      flex-wrap: wrap;
+      z-index: 0;
+      justify-content: space-between;
+
+      &.essence {
+        label {
+          max-width: 180px;
+
+          .show {
+            font-size: 3em;
+          }
+        }
+      }
+
+      label {
+        position: relative;
+        z-index: 0;
+        flex: 1 1;
+        min-width: 25%;
+        margin: 1%;
+
+
+        i {
+          display: none;
+        }
+
+        .show {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 5em;
+          color: $intense-color;
+          background-color: white;
+          border-radius: 50%;
+        }
+
+        .image-title {
+          background-color: $light-color;
+          padding: 6px;
+          text-align: center;
+        }
+
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  #result {
+    @media (max-width: $style-change-width) {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: white;
+      text-align: center;
+      border-top: 2px solid $light-color;
+      padding-top: 3vh;
+      padding-bottom: 3vh;
+      h2 {
+        float: left;
+      }
+      .estimate {
+        line-height: 100%;
+        padding-bottom: 10px;
+      }
+      p {
+        line-height: 1.2em;
+      }
+    }
+    @media (min-width: $style-change-width) {
+      padding-right: 5vh;
+      width: $price-col-width;
+      float: left;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    a {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    p {
+      margin-top: 20px;
+      text-align: justify;
+
+      &.estimate {
+        margin-top: 0;
+        text-align: center;
+        font-size: 1.6em;
+        font-weight: bold;
+      }
+    }
+  }
+}

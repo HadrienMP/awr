@@ -1,0 +1,45 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title #{title ? title + " | " : ""}L&apos;Atelier Wood River
+    link(href='/css/main.css' rel='stylesheet')
+    link(rel='stylesheet' href='/css/basicLightbox.min.css')
+    script(src='https://kit.fontawesome.com/36321d34e2.js' crossorigin='anonymous')
+
+block content
+
+nav
+    mixin pagesMixin
+        each page in pages
+            - const ctaClass = page.callToAction ? 'call-to-action' : ''
+            - const activeClass = page.id === currentPageId ? 'active' : ''
+            - const pageClass = `${ctaClass} ${activeClass}`
+            a(href=page.path
+                id=page.id === 'index' ? 'home' : ''
+                class=pageClass
+            )= page.name
+    #main-nav
+        +pagesMixin
+        a#show-nav(href='#')
+            i.fa.fa-bars
+    #mobile-nav
+        a#close-nav(href='#')
+            i.fa.fa-times
+
+        +pagesMixin
+footer
+    section.social
+        a(href='https://www.instagram.com/woodriver33/' target='_blank' title='Mon Insta')
+            i.fab.fa-instagram
+        a(href='https://www.facebook.com/Latelier-wood-river-103327594626145/' target='_blank' title='Mon Facebook')
+            i.fab.fa-facebook-f
+        a(href='mailto:tom@atelierwoodriver.fr' target='_blank' title='Écrivez-moi un mail !')
+            i.far.fa-envelope
+        a(href='tel:0650806685' target='_blank' title='Téléphonez-moi !')
+            i.fas.fa-phone-alt
+
+block scripts
+    script(src='/js/nav.js')
+    script(src="/js/basicLightbox.min.js")
+    script(src='/js/ligthbox.js' type='module')

@@ -1,0 +1,96 @@
+@import "theme";
+
+#main-nav {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: $light-color;
+
+  @media (max-width: 614px) {
+    a {
+      display: none;
+    }
+    a#show-nav {
+      display: block;
+    }
+  }
+  @media (min-width: 614px) {
+    a {
+      display: block;
+    }
+    a#show-nav {
+      display: none;
+    }
+  }
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  a {
+    padding: 10px;
+    margin: 0 10px;
+    border-left: 1px white;
+    vertical-align: middle;
+    flex-shrink: 0;
+    border-radius: 5px;
+
+    &#home {
+      font-size: 1.35em;
+      flex-grow: 1;
+      padding: 15px 10px;
+      display: block;
+    }
+
+    &:hover {
+      text-shadow: 1px 0 0 black;
+    }
+
+    &.active {
+      text-decoration: underline;
+    }
+
+    &.call-to-action {
+      background-color: $intense-color;
+      color: white;
+
+      &:hover {
+        text-shadow: 1px 0 0 white;
+      }
+    }
+  }
+}
+
+#mobile-nav {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: wheat;
+  z-index: 10;
+  display: none;
+  padding: 40px;
+
+  &.show {
+    display: block;
+  }
+
+  a {
+    text-align: center;
+    display: block;
+    margin-top: 40px;
+    font-size: 1.4em;
+  }
+
+  #close-nav {
+    position: absolute;
+    margin: 0;
+    right: 8px;
+    top: 4px;
+  }
+}

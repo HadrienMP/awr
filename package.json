@@ -1,0 +1,30 @@
+{
+  "name": "awr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "npm run build:sass && npm run build:elm",
+    "build:elm": "elm make elm/Main.elm --output static/js/simulation.js --optimize",
+    "build:sass": "sass ./sass/main.scss ./static/css/main.css",
+    "start": "node app.js",
+    "dev:all": "concurrently 'npm run dev:start' 'npm run dev:sass' 'npm run dev:elm'",
+    "dev:start": "nodemon app.js",
+    "dev:elm": "chokidar 'elm/*.elm' -c 'elm make elm/Main.elm --output static/js/simulation.js' --initial",
+    "dev:sass": "sass --watch ./sass/main.scss ./static/css/main.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "basiclightbox": "^5.0.4",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^6.4.0",
+    "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15",
+    "pug": "^3.0.2",
+    "sass": "^1.43.5"
+  }
+}
