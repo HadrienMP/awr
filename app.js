@@ -23,6 +23,11 @@ const TARIFS = {
 };
 const pages = [
     INDEX,
+    {
+        path: "/atelier",
+        id: "atelier",
+        name: "L'Atelier"
+    },
     REALISATIONS,
     TARIFS,
 ]

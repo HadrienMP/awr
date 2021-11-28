@@ -4,10 +4,11 @@ $space: 4px;
   flex-wrap: wrap;
   padding: $space;
   justify-content: center;
-  img {
+  img, video {
     border-radius: 10px;
     width: 400px;
-    max-width: 33%;
+    max-width: 50%;
     padding: $space;
+    object-fit: cover;
   }
 }
