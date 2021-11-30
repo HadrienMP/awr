@@ -356,7 +356,7 @@ input[type=range]:focus::-ms-fill-upper {
   text-align: center;
 }
 #simulation-columns #fields .radio-field label img {
-  max-width: 100%;
+  width: 100%;
 }
 @media (max-width: 600px) {
   #simulation-columns #result {
