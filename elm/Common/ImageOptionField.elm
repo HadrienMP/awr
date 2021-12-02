@@ -14,7 +14,7 @@ type alias Model option =
 
 
 type alias Toto option msg =
-    { current : option
+    { current : Maybe option
     , onChange : option -> msg
     }
 
@@ -28,7 +28,7 @@ displayOne : Toto option msg -> Model option -> Html msg
 displayOne { current, onChange } { fieldId, value, labelString, image } =
     let
         selected =
-            value == current
+            current |> Maybe.map ((==) value) |> Maybe.withDefault False
     in
     label
         [ for fieldId ]

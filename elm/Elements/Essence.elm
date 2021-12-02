@@ -12,6 +12,9 @@ type Essence
     | Prestige
     | Exotique
 
+toString: Essence -> String
+toString essence =
+    essenceField essence |> .labelString
 
 all : List Essence
 all =
@@ -40,8 +43,8 @@ prix essence =
             Euros 900
 
 
-essencesFields : List (ImageOptionField.Model Essence)
-essencesFields =
+fields : List (ImageOptionField.Model Essence)
+fields =
     all
     |> List.map essenceField
 

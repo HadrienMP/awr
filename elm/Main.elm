@@ -1,17 +1,18 @@
 module Main exposing (..)
 
 import Browser
-import Elements.Essence as Essence exposing (Essence(..))
-import Html exposing (Html, a, div, h2, input, label, p, text)
-import Html.Attributes exposing (class, for, href, id, step, type_, value)
-import Html.Events exposing (onInput)
 import Common.ImageOptionField as ImageOptionField
-import Elements.Pietement as Pietement exposing (Position)
-import Common.Prix as Prix exposing (Prix(..))
-import Common.Surface exposing (Surface)
-import Elements.Table as Table exposing (Table)
 import Common.Mesures exposing (Ligne(..), TaillesRanges, centimetres, fromCentimetres)
-import Elements.Type as Type exposing (TableType, tailles)
+import Common.Prix as Prix
+import Common.Surface exposing (Surface)
+import Elements.Essence as Essence exposing (Essence(..))
+import Elements.Pietement as Pietement exposing (Position)
+import Elements.Table as Table exposing (Table)
+import Elements.Type as Type exposing (TableType)
+import Form exposing (Form)
+import Html exposing (Html, a, button, div, h2, i, input, label, li, p, span, text, ul)
+import Html.Attributes exposing (class, classList, for, href, id, step, type_, value)
+import Html.Events exposing (onClick, onInput)
 
 
 
@@ -31,9 +32,32 @@ main =
 -- MODEL
 
 
-init : () -> ( Table, Cmd Msg )
+type Step
+    = Type
+    | Essence
+    | Surface
+    | Pietement
+
+
+type Model
+    = Form Step Form
+    | Estimation Table
+
+
+formulaireVide =
+    Form Type
+        { type_ = Nothing
+        , essence = Nothing
+        , surface = Table.tableAManger.surface
+        , pietement = Nothing
+        }
+
+
+init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Table.tableAManger, Cmd.none )
+    ( formulaireVide
+    , Cmd.none
+    )
 
 
 
@@ -43,81 +67,155 @@ init _ =
 type Msg
     = LongueurChanged String
     | LargeurChanged String
+    | ValidateSurface
     | TableTypeChanged TableType
     | EssenceChanged Essence
     | PositionPietementChanged Position
+    | Reset
 
 
-update : Msg -> Table -> ( Table, Cmd Msg )
-update msg table =
-    case msg of
-        LongueurChanged centimetres ->
-            ( fromCentimetres centimetres |> Maybe.withDefault table.surface.longueur |> Table.withLongueur table
-            , Cmd.none
-            )
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case model of
+        Estimation _ ->
+            ( formulaireVide, Cmd.none )
 
-        LargeurChanged centimetres ->
-            ( fromCentimetres centimetres |> Maybe.withDefault table.surface.largeur |> Table.withLargeur table
-            , Cmd.none
-            )
+        Form step form ->
+            case msg of
+                LongueurChanged centimetres ->
+                    ( fromCentimetres centimetres
+                        |> Maybe.withDefault form.surface.longueur
+                        |> Form.withLongueur form
+                        |> Form step
+                    , Cmd.none
+                    )
 
-        TableTypeChanged tableType ->
-            ( Table.withType tableType table, Cmd.none )
+                LargeurChanged centimetres ->
+                    ( fromCentimetres centimetres
+                        |> Maybe.withDefault form.surface.largeur
+                        |> Form.withLargeur form
+                        |> Form step
+                    , Cmd.none
+                    )
 
-        EssenceChanged essence ->
-            ( { table | essence = essence }, Cmd.none )
+                TableTypeChanged tableType ->
+                    ( Form.withType tableType form |> Form Essence, Cmd.none )
 
-        PositionPietementChanged positionPietement ->
-            ( { table | pietement = positionPietement }, Cmd.none )
+                EssenceChanged essence ->
+                    ( { form | essence = Just essence } |> Form Surface, Cmd.none )
+
+                PositionPietementChanged positionPietement ->
+                    ( { form | pietement = Just positionPietement }
+                        |> Form.toTable
+                        |> Estimation
+                    , Cmd.none
+                    )
+
+                ValidateSurface ->
+                    ( form |> Form Pietement, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
 
 
 
 -- VIEW
 
 
-view : Table -> Html Msg
-view table =
-    div [ id "simulation-columns" ]
-        [ div [ id "fields" ]
-            ([ h2 [] [ text "Type" ]
-             , div [ class "radio-field" ]
-                (ImageOptionField.display
-                    { current = table.type_, onChange = TableTypeChanged }
-                    Type.fields
-                )
-             , h2 [] [ text "Essence de bois" ]
-             , div [ class "radio-field essence" ]
-                (ImageOptionField.display
-                    { current = table.essence, onChange = EssenceChanged }
-                    Essence.essencesFields
-                )
-             , h2 [] [ text "Taille du plateau" ]
-             ]
-                ++ (tailles table.type_ |> surfaceFields table.surface)
-                ++ [ h2 [] [ text "Piétement" ]
-                   , div [ class "radio-field" ]
-                        (ImageOptionField.display
-                            { current = table.pietement, onChange = PositionPietementChanged }
-                            Pietement.fields
-                        )
-                   ]
-            )
-        , div
-            [ id "result" ]
-            [ h2 [] [ text "Estimation" ]
-            , p [ class "estimate" ] [ Table.prix table |> Prix.print |> text ]
-            , p [] [ text "D'autres options sont disponibles." ]
-            , p []
-                [ text "Pour concevoir votre projet entièrement sur mesure et recevoir votre devis, "
-                , a [ href "mailto:tom@woodriver.fr" ] [ text "contactez-moi par mail." ]
+view : Model -> Html Msg
+view model =
+    case model of
+        Form step form ->
+            div [ id "simulation" ]
+                [ div [ class "workflow-links" ]
+                    [ button [ classList [ ( "active", step == Type ) ] ] [ text "1. Format" ]
+                    , button [ classList [ ( "active", step == Essence ) ] ] [ text "2. Essence" ]
+                    , button [ classList [ ( "active", step == Surface ) ] ] [ text "3. Dimensions" ]
+                    , button [ classList [ ( "active", step == Pietement ) ] ] [ text "4. Piétement" ]
+                    , button [] [ text "5. Estimation" ]
+                    ]
+                , div [ id "workflow-content" ]
+                    (case step of
+                        Type ->
+                            [ h2 [] [ text "Type de table" ]
+                            , div [ class "radio-field" ]
+                                (ImageOptionField.display
+                                    { current = form.type_
+                                    , onChange = TableTypeChanged
+                                    }
+                                    Type.fields
+                                )
+                            ]
+
+                        Essence ->
+                            [ h2 [] [ text "Essence de bois" ]
+                            , div [ class "radio-field" ]
+                                (ImageOptionField.display
+                                    { current = form.essence
+                                    , onChange = EssenceChanged
+                                    }
+                                    Essence.fields
+                                )
+                            ]
+
+                        Surface ->
+                            surfaceFields form.surface (Type.tailles (form.type_ |> Maybe.withDefault Type.AManger))
+
+                        Pietement ->
+                            [ h2 [] [ text "Type de pied" ]
+                            , div [ class "radio-field" ]
+                                (ImageOptionField.display
+                                    { current = form.pietement
+                                    , onChange = PositionPietementChanged
+                                    }
+                                    Pietement.fields
+                                )
+                            ]
+                    )
                 ]
-            ]
-        ]
+
+        Estimation table ->
+            div [ id "simulation" ]
+                [ div [ class "workflow-links" ]
+                    [ button [] [ text "1. Format" ]
+                    , button [] [ text "2. Essence" ]
+                    , button [] [ text "3. Dimensions" ]
+                    , button [] [ text "4. Piétement" ]
+                    , button [ class "active" ] [ text "5. Estimation" ]
+                    ]
+                , div [ id "workflow-content" ]
+                    [ h2 [] [ text "Récapitulatif" ]
+                    , ul []
+                        (Table.recapitulatif table
+                            |> List.map (\a -> [ text a ])
+                            |> List.map (li [])
+                        )
+                    , h2 []
+                        [ span
+                            [ class "estimation" ]
+                            [ text "Estimation" ]
+                        , span
+                            [ class "prix" ]
+                            [ Table.prix table |> Prix.print |> text ]
+                        ]
+                    , p [] [ text "D'autres options sont disponibles." ]
+                    , p []
+                        [ text "Pour concevoir votre projet entièrement sur mesure et recevoir votre devis, "
+                        , a [ href "mailto:tom@woodriver.fr" ] [ text "contactez-moi par mail." ]
+                        ]
+                    , div [ class "actions" ]
+                        [ a [ class "call-to-action", href "mailto:tom@woodriver.fr" ]
+                            [ i [ class "far fa-envelope" ] [], text "Demandez un devis !" ]
+                        , button [ onClick Reset, class "discret" ] [ text "Relancer une estimation" ]
+                        ]
+                    ]
+                ]
 
 
 surfaceFields : Surface -> TaillesRanges -> List (Html Msg)
 surfaceFields surface { largeurs, longueurs } =
-    [ div [ class "range-field" ]
+    [ h2 [] [ text "Dimensions du plateau" ]
+    , div [ class "range-field" ]
         [ label [ for "longueur" ] [ text <| "Longueur: " ++ (centimetres surface.longueur |> String.fromInt) ++ " cm" ]
         , input
             [ id "longueur"
@@ -143,6 +241,7 @@ surfaceFields surface { largeurs, longueurs } =
             ]
             []
         ]
+    , button [ onClick ValidateSurface ] [ text "Suivant >>" ]
     ]
 
 
@@ -150,6 +249,6 @@ surfaceFields surface { largeurs, longueurs } =
 -- SUBSCRIPTIONS
 
 
-subscriptions : Table -> Sub Msg
+subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.none

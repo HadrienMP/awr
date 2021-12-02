@@ -8,6 +8,9 @@ type TableType
     = Basse
     | AManger
 
+toString: TableType -> String
+toString tableType =
+    tableTypeField tableType |> .labelString
 
 fields : List (ImageOptionField.Model TableType)
 fields =

@@ -4,7 +4,6 @@ $price-col-width: 33%;
 $top-distance: 5vh;
 $style-change-width: 600px;
 
-
 #simulation-columns {
   width: 100%;
   display: flex;
@@ -14,96 +13,6 @@ $style-change-width: 600px;
   left: 50%;
   transform: translateX(-50%);
   max-width: 961px;
-
-  input[type="radio"] {
-    display: none;
-  }
-
-  & > * {
-    padding: 5vh 2vh;
-  }
-
-  h2 {
-    padding-bottom: 10px;
-    border-bottom: 2px solid wheat;
-    margin: 40px 0 20px;
-    font-size: 1.4em;
-
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  #fields {
-    @media (max-width: $style-change-width) {
-      position: absolute;
-      top: 0;
-      bottom: 200px;
-      overflow: auto;
-      width: 100%;
-      padding-top: 3vh;
-    }
-    @media (min-width: $style-change-width) {
-      position: absolute;
-      top: 5vh;
-      bottom: 0;
-      left: $price-col-width;
-      overflow: auto;
-      padding: 0 2px;
-    }
-
-    .radio-field {
-      display: flex;
-      flex-wrap: wrap;
-      z-index: 0;
-      justify-content: space-between;
-
-      &.essence {
-        label {
-          max-width: 180px;
-
-          .show {
-            font-size: 3em;
-          }
-        }
-      }
-
-      label {
-        position: relative;
-        z-index: 0;
-        flex: 1 1;
-        min-width: 25%;
-        margin: 1%;
-
-
-        i {
-          display: none;
-        }
-
-        .show {
-          display: block;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 5em;
-          color: $intense-color;
-          background-color: white;
-          border-radius: 50%;
-        }
-
-        .image-title {
-          background-color: $light-color;
-          padding: 6px;
-          text-align: center;
-        }
-
-        img {
-          width: 100%;
-        }
-      }
-    }
-  }
 
   #result {
     @media (max-width: $style-change-width) {
@@ -150,6 +59,208 @@ $style-change-width: 600px;
         font-size: 1.6em;
         font-weight: bold;
       }
+    }
+  }
+}
+
+#simulation {
+
+  .workflow-links {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2vh;
+
+    button {
+      flex-grow: 1;
+      border-radius: 0;
+      border: 1px solid $intense-color;
+      background: $light-color;
+      font-family: Raleway, sans-serif;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 1em;
+
+      &.active {
+        background: $intense-color;
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+
+  #workflow-content {
+    padding-top: 30px;
+
+    button {
+      border: 1px solid $intense-color;
+      background: $light-color;
+      padding: 10px 20px;
+      @include font();
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-top: 20px;
+      float: right;
+
+      &:hover {
+        color: white;
+        background: $intense-color;
+        font-weight: bold;
+      }
+      &.discret {
+        border: none;
+        background: none;
+        text-decoration: underline;
+        margin-top: 0;
+        &:hover {
+          color: black;
+        }
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+
+    & > * {
+      flex: 1 1;
+    }
+
+    .call-to-action {
+      border: 1px solid $intense-color;
+      background: $light-color;
+      padding: 10px 20px;
+      @include font();
+      font-size: 1.1em;
+      cursor: pointer;
+      text-align: center;
+      font-weight: normal;
+      text-decoration: none;
+
+      i {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      &:hover {
+        background: $intense-color;
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+
+  h2 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid wheat;
+    margin: 30px 0 15px;
+    font-size: 1.4em;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  li {
+    line-height: 1.5em;
+  }
+  li:before {
+    content: "- ";
+  }
+
+  .radio-field {
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 0;
+    justify-content: space-between;
+    margin-left: -1%;
+
+    &.essence {
+      label {
+        max-width: 180px;
+
+        .show {
+          font-size: 3em;
+        }
+      }
+    }
+
+    label {
+      position: relative;
+      z-index: 0;
+      flex: 1 1;
+      min-width: 25%;
+      margin-left: 1%;
+      margin-bottom: 5px;
+      border: 1px solid $intense-color;
+      cursor: pointer;
+
+      &:hover {
+        .image-title {
+          background: $intense-color;
+          color: white;
+          font-weight: bold;
+        }
+      }
+
+      i {
+        display: none;
+      }
+
+      .show {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 5em;
+        color: $intense-color;
+        background-color: white;
+        border-radius: 50%;
+      }
+
+      .image-title {
+        background-color: $light-color;
+        padding: 6px;
+        text-align: center;
+      }
+
+      img {
+        width: 100%;
+        border-top: 1px solid $intense-color;
+      }
+    }
+  }
+
+  .estimation:after {
+    content: ' : ';
+  }
+
+  .prix {
+    position: relative;
+    top: 2px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  a {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 10px;
+    text-align: justify;
+
+    &.image-title {
+      margin-top: 0;
     }
   }
 }

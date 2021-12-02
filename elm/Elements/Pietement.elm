@@ -10,6 +10,9 @@ type Position
     = BoutDeTable
     | Central
 
+toString: Position -> String
+toString position =
+    field position |> .labelString
 
 prix : Type.TableType -> Position -> Prix
 prix type_ position =
@@ -40,7 +43,7 @@ field position =
     case position of
         BoutDeTable ->
             { fieldId = "bout-de-table"
-            , labelString = "Bout de table"
+            , labelString = "En bout de table"
             , image = Images.boutDeTable
             , value = position
             }

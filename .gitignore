@@ -5,3 +5,5 @@ package-lock.json
 dist.zip
 elm-stuff
 .DS_Store
+/static/css
+/static/js/simulation.js

@@ -10,7 +10,7 @@
     "start": "node app.js",
     "dev:all": "concurrently 'npm run dev:start' 'npm run dev:sass' 'npm run dev:elm'",
     "dev:start": "nodemon app.js",
-    "dev:elm": "chokidar 'elm/*.elm' -c 'elm make elm/Main.elm --output static/js/simulation.js' --initial",
+    "dev:elm": "chokidar 'elm/*.elm' -c 'elm make elm/Main.elm --output static/js/simulation.js --debug' --initial",
     "dev:sass": "sass --watch ./sass/main.scss ./static/css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

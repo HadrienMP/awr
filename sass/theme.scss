@@ -2,6 +2,10 @@ $light-color: wheat;
 $intense-color: #cba04a;
 $max-container-width: 800px;
 
+@mixin font {
+  font-family: Raleway, sans-serif;
+}
+
 p {
   line-height: 1.5em;
 }

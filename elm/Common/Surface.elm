@@ -9,6 +9,14 @@ type alias Surface =
     }
 
 
+toString : Surface -> String
+toString surface =
+    ( surface.longueur, surface.largeur )
+    |> Tuple.mapBoth Mesures.centimetres Mesures.centimetres
+    |> Tuple.mapBoth String.fromInt String.fromInt
+    |> \(longueur, largeur) -> longueur ++ " x " ++ largeur ++ " cm"
+
+
 m2 : Surface -> Float
 m2 surface =
     Mesures.times surface.largeur surface.longueur

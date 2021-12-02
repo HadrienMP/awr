@@ -16,6 +16,15 @@ type alias Table =
     }
 
 
+recapitulatif : Table -> List String
+recapitulatif table =
+    [ "Format : " ++ Type.toString table.type_
+    , "Essence : " ++ Essence.toString table.essence
+    , "Dimensions : " ++ Surface.toString table.surface
+    , "Piétement : " ++ Pietement.toString table.pietement
+    ]
+
+
 prix : Table -> Prix
 prix table =
     Essence.prix table.essence
@@ -33,51 +42,3 @@ tableAManger =
         }
     , pietement = Pietement.BoutDeTable
     }
-
-
-withLongueur : Table -> Mesures.Ligne -> Table
-withLongueur table longueur =
-    let
-        surface =
-            table.surface
-
-        updated =
-            { surface | longueur = longueur }
-    in
-    { table | surface = updated }
-
-
-withLargeur : Table -> Mesures.Ligne -> Table
-withLargeur table largeur =
-    let
-        surface =
-            table.surface
-
-        updated =
-            { surface | largeur = largeur }
-    in
-    { table | surface = updated }
-
-
-withType : TableType -> Table -> Table
-withType type_ table =
-    case type_ of
-        Type.Basse ->
-            { type_ = type_
-            , essence = table.essence
-            , surface =
-                { longueur = Centimetre 110
-                , largeur = Centimetre 50
-                }
-            , pietement = table.pietement
-            }
-
-        Type.AManger ->
-            { type_ = type_
-            , essence = table.essence
-            , surface =
-                { longueur = Centimetre 140
-                , largeur = Centimetre 70
-                }
-            , pietement = table.pietement
-            }
