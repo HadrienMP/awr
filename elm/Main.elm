@@ -204,7 +204,7 @@ view model =
                         , a [ href "mailto:tom@woodriver.fr" ] [ text "contactez-moi par mail." ]
                         ]
                     , div [ class "actions" ]
-                        [ a [ class "call-to-action", href "mailto:tom@woodriver.fr" ]
+                        [ a [ class "call-to-action", href "mailto:tom@atelierwoodriver.fr" ]
                             [ i [ class "far fa-envelope" ] [], text "Demandez un devis !" ]
                         , button [ onClick Reset, class "discret" ] [ text "Relancer une estimation" ]
                         ]
