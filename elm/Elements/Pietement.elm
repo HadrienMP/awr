@@ -10,9 +10,11 @@ type Position
     = BoutDeTable
     | Central
 
-toString: Position -> String
+
+toString : Position -> String
 toString position =
     field position |> .labelString
+
 
 prix : Type.TableType -> Position -> Prix
 prix type_ position =
@@ -20,18 +22,18 @@ prix type_ position =
         Type.Basse ->
             case position of
                 BoutDeTable ->
-                    Euros 180
+                    Euros 240
 
                 Central ->
-                    Euros 250
+                    Euros 310
 
         Type.AManger ->
             case position of
                 BoutDeTable ->
-                    Euros 250
+                    Euros 310
 
                 Central ->
-                    Euros 500
+                    Euros 560
 
 
 fields =

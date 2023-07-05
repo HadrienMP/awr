@@ -12,9 +12,11 @@ type Essence
     | Prestige
     | Exotique
 
-toString: Essence -> String
+
+toString : Essence -> String
 toString essence =
     essenceField essence |> .labelString
+
 
 all : List Essence
 all =
@@ -25,28 +27,29 @@ prix : Essence -> Prix
 prix essence =
     case essence of
         Chene ->
-            Euros 900
-
-        Chataignier ->
-            Euros 900
-
-        Frene ->
-            Euros 850
-
-        Noyer ->
-            Euros 950
-
-        Prestige ->
             Euros 1000
 
+        Chataignier ->
+            Euros 1000
+
+        Frene ->
+            Euros 950
+
+        Noyer ->
+            Euros 1050
+
+        Prestige ->
+            Euros 1100
+
         Exotique ->
-            Euros 900
+            Euros 1050
 
 
 fields : List (ImageOptionField.Model Essence)
 fields =
     all
-    |> List.map essenceField
+        |> List.map essenceField
+
 
 essenceField : Essence -> ImageOptionField.Model Essence
 essenceField essence =
